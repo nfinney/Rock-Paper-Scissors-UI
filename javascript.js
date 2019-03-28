@@ -72,30 +72,52 @@ function whoWon(){
 }
 
 function resetGame(){
-
+    throwResult.textContent = '';
+    gameResult.textContent = '';
+    totalGamesPlayed = 1;
 }
 
 
 function game(e) {
+    
+    this.classList.add('clicked');
+
+    totalGamesPlayed++;
+    if(totalGamesPlayed == 5){  
+        gameResult.textContent = whoWon();
+        // console.log(whoWon());
+    } else if(totalGamesPlayed > 5) {
+        resetGame();
+    }
 
     let userInput = this.id;
     userInput = userInput.toLowerCase();  
     
-    console.log(playRound(userInput, computerPlay()));
-
-    totalGamesPlayed++;
+    throwResult.textContent = playRound(userInput, computerPlay());   
     
-    if(totalGamesPlayed == 5){
-        resetGame();
-        console.log(whoWon());
-    }
 }
 
+
+
+function removeTransition(e){
+    if(e.propertyName !== 'transform') return; //skip it if it's not a transform
+    this.classList.remove('clicked');
+}
 
 
 var userGamesWon = 0; //counter to keep track of total games user won
 var computerGamesWon = 0;
 var totalGamesPlayed = 0;
+const container = document.querySelector('#results-container');
+const throwResult = document.createElement('h3');
+const gameResult = document.createElement('h2');
+
+throwResult.style.cssText = "text-align: center; width: 100vw;";
+gameResult.style.cssText = "text-align: center; width: 100vw;";
+
+container.appendChild(throwResult);
+container.appendChild(gameResult);
 
 const buttons = document.querySelectorAll('.button');
 buttons.forEach(button => button.addEventListener('click', game));
+buttons.forEach(button => button.addEventListener('transitionend', removeTransition));
