@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock Paper Scissors</title>
+    </head>
+
+    <script>
+
+        var userGamesWon = 0; //counter to keep track of total games user won
+        var computerGamesWon = 0;
+
+        function computerPlay(){
+            var computerString = null; 
+            
+            switch(Math.floor(Math.random() * 3)) { //returns a random int from 0 to 2
+                case 0:
+                    computerString = "Rock";
+                    break;
+                case 1:
+                    computerString = "Scissors";
+                    break;
+                case 2:
+                    computerString = "Paper";
+                    break;
+            }
+
+            return computerString;
+        }
+
+
+        function playRound(playerSelection, computerSelection) {
+
+            // playerSelection = capitalize(playerSelection); // capitize the player's input (computer's is already handled in computerPlay function)
+
+            if(playerSelection == "Rock"){
+                if(computerSelection == "Rock"){
+                    return "Tie Game. You both threw " + computerSelection;
+                } else if(computerSelection == "Scissors") {
+                    userGamesWon++;
+                    return "You Win! " + playerSelection + " beats " + computerSelection;
+                } else if(computerSelection == "Paper") {
+                    computerGamesWon++;
+                    return "You Lose! " + computerSelection + " beats " + playerSelection;
+                } else {
+                    return "Game is Broken";
+                }
+            } else if (playerSelection == "Scissors") {
+                if(computerSelection == "Rock"){
+                    computerGamesWon++;
+                    return "You Lose! " + computerSelection + " beats " + playerSelection;
+                } else if(computerSelection == "Scissors") {
+                    return "Tie Game. You both threw " + computerSelection;
+                } else if(computerSelection == "Paper") {
+                    userGamesWon++;
+                    return "You Win! " + playerSelection + " beats " + computerSelection;
+                } else {
+                    return "Game is Broken";
+                }
+            } else if (playerSelection == "Paper") {
+                if(computerSelection == "Rock"){
+                    userGamesWon++;
+                    return "You Win! " + playerSelection + " beats " + computerSelection;
+                } else if(computerSelection == "Scissors") {
+                    computerGamesWon++;
+                    return "You Lose! " + computerSelection + " beats " + playerSelection;
+                } else if(computerSelection == "Paper") {
+                    return "Tie Game. You both threw " + computerSelection;
+                } else {
+                    return "Game is Broken";
+                }
+            } else {
+                return "Game is Broken";
+            }
+        }
+
+        
+        function whoWon(){
+            if(userGamesWon>computerGamesWon) {
+                return "Congrats, you won! You won " + userGamesWon + " out of 5 games. The computer won " + computerGamesWon + " game(s).";
+            } else if(userGamesWon == computerGamesWon) {
+                return "You tied with the computer"
+            } else {
+                return "Sorry, but you lose. The computer won " + computerGamesWon + " out of 5 games. You won " + userGamesWon + " game(s).";
+            }
+        }
+
+
+        function game() {
+            for(i=0; i<5; i++) {
+                                
+                var userInput = prompt("Please choose and type 'Rock,' 'Scissors,' or 'Paper.'");
+                // userInput = capitalize(userInput); //bring userInput to lowercase and then capitalize first letter
+                
+                userInput = capitalize(userInput); 
+                //make sure the user has entered the words, Rock, paper, or scissor. If not make them re-enter until they do
+
+                console.log(playRound(userInput, computerPlay()));
+                // console.log("Games won: " + userGamesWon);
+                // console.log("Games played: " + (i+1));
+                
+            }
+
+            console.log(whoWon());
+        }
+
+        
+        function capitalize(stringInput) {
+            stringInput = stringInput.toLowerCase();
+            return stringInput.charAt(0).toUpperCase() + stringInput.slice(1);
+        }
+
+        game(); //call the game funtion
+
+    </script>
+
+    <body>
+
+                
+    
+    </body>
+
+</html>
+
+
